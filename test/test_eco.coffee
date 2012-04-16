@@ -124,6 +124,10 @@ module.exports =
     test.same "<%", eco.render "<%%"
     test.done()
 
+  "rendering an escaped %>": (test) ->
+    test.same "%>", eco.render "%%>"
+    test.done()
+
   "requiring eco templates as modules": (test) ->
     hello = require __dirname + "/fixtures/hello.eco"
     test.ok typeof hello is "function"
