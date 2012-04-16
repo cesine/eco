@@ -3,7 +3,7 @@
 
 module.exports = class Scanner
   @modePatterns:
-    data:    /(.*?)(<%%|<%\s*(\#)|<%(([=-])?)|\n|$)/
+    data:    /(.*?)(<%%|%%>|<%\s*(\#)|<%(([=-])?)|\n|$)/
     code:    /(.*?)((((:|(->|=>))\s*))?%>|\n|$)/
     comment: /(.*?)(%>|\n|$)/
 
@@ -57,6 +57,10 @@ module.exports = class Scanner
   scanData: (callback) ->
     if @tail is "<%%"
       @buffer += "<%"
+      @scan callback
+
+    else if @tail is "%%>"
+      @buffer += "%>"
       @scan callback
 
     else if @tail is "\n"
