@@ -31,6 +31,7 @@ module.exports = class Preprocessor
     @options = options
 
   recordCode: (code) ->
+    code = code.replace /\s+/g, ' '
     if code isnt "end"
       if @options.print
         if @options.safe
