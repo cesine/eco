@@ -25,6 +25,9 @@ module.exports = class Preprocessor
 
   printString: (string) ->
     if string.length
+      string = string
+          .replace(/\s+</g, '<')
+          .replace(/>\s+/g, '>')
       @record "__out.push #{util.inspectString string}"
 
   beginCode: (options) ->
