@@ -14,6 +14,10 @@ module.exports =
     test.same fixture("helpers.coffee"), preprocess fixture("helpers.eco")
     test.done()
 
+  "preprocessing fixtures/newlines.eco": (test) ->
+    test.same fixture("newlines.coffee"), preprocess fixture("newlines.eco")
+    test.done()
+
   "unexpected dedent": (test) ->
     test.expect 1
     try
@@ -25,17 +29,6 @@ module.exports =
       """
     catch err
       test.same "Parse error on line 4: unexpected dedent", err.toString()
-    test.done()
-
-  "unexpected newline in code block": (test) ->
-    test.expect 1
-    try
-      preprocess """
-        <%= item.price if
-              item = @items?[0] %>
-      """
-    catch err
-      test.same "Parse error on line 1: unexpected newline in code block", err.toString()
     test.done()
 
   "unexpected end of template": (test) ->
