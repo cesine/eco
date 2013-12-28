@@ -3,3 +3,4 @@ Cakefile
 doc/
 test/
 vendor/
+lib/eco
