@@ -33,10 +33,12 @@ module.exports = class Preprocessor
   recordCode: (code) ->
     if code isnt "end"
       if @options.print
-        if @options.safe
-          @record "__out.push #{code}"
-        else
-          @record "__out.push __sanitize #{code}"
+        code = if @options.reactive
+          isSafe = if @options.safe then 'true' else 'false'
+          "__reactify #{code}, #{isSafe}"
+        else if not @options.safe
+          "__sanitize #{code}"
+        @record "__out.push #{code}"
       else
         @record code
 

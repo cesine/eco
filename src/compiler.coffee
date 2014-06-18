@@ -8,6 +8,7 @@ exports.precompile = precompile = (source) ->
   """
     function(__obj) {
       if (!__obj) __obj = {};
+      if (window.__reactTagCount == null) window.__reactTagCount = 0;
       var __out = [], __capture = function(callback) {
         var out = __out, result;
         __out = [];
@@ -23,6 +24,22 @@ exports.precompile = precompile = (source) ->
         } else {
           return '';
         }
+      }, __getReactTagValue = function(tag) {
+        var curr = window.__reactTagCount += 1;
+        var sel = 'react-uniq-' + curr;
+        setTimeout(function() {
+          console.log('Append', sel, tag);
+          jQuery('#' + sel).replaceWith(tag);
+        }, 0);
+        return '<b class="react-tmp" id="' + sel + '"></b>';
+      }, __reactify = function(value, isSafe) {
+        if (!(value instanceof rx.SrcCell)) {
+          return isSafe ? value : __sanitize(value);
+        }
+        return __getReactTagValue(rx.rxt.tags.span(rx.bind(function() {
+          var val = value.get();
+          return isSafe ? rx.rxt.rawHtml(val) : __sanitize(val);
+        })));
       }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
       __safe = __obj.safe = function(value) {
         if (value && value.ecoSafe) {

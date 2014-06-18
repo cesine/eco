@@ -3,7 +3,7 @@
 
 module.exports = class Scanner
   @modePatterns:
-    data:    /(.*?)(<%%|<%\s*(\#)|<%(([=-])?)|\n|$)/
+    data:    /(.*?)(<%%|<%\s*(\#)|<%((~?[=-])?)|\n|$)/
     code:    /(.*?)((((:|(->|=>))\s*))?%>|\n|$)/
     comment: /(.*?)(%>|\n|$)/
 
@@ -70,7 +70,10 @@ module.exports = class Scanner
         @mode = "comment"
       else
         @mode = "code"
-        callback ["beginCode", print: @directive?, safe: @directive is "-"]
+        pr = @directive?
+        safe = pr and @directive.indexOf('-') isnt -1
+        reactive = pr and @directive.indexOf('~') is 0
+        callback ["beginCode", {print: pr, safe: safe, reactive: reactive}]
 
   scanCode: (callback) ->
     if @tail is "\n"
