@@ -36,13 +36,8 @@ exports.precompile = precompile = (source) ->
       };
       if (!__escape) {
         __escape = __obj.escape = function(value) {
-          return ('' + value)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/\x22/g, '&quot;');
-        };
-      }
+            return _.escape(value);
+        }
       (function() {
     #{indent script, 4}
       }).call(__obj);
