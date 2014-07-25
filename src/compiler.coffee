@@ -38,6 +38,7 @@ exports.precompile = precompile = (source) ->
         __escape = __obj.escape = function(value) {
             return _.escape(value);
         }
+      }
       (function() {
     #{indent script, 4}
       }).call(__obj);
