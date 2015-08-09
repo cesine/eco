@@ -17,7 +17,7 @@ module.exports = class Scanner
     tokens
 
   constructor: (source) ->
-    @source  = new String(source).replace /\r\n?/g, "\n"
+    @source  = source.toString().replace /\r\n?/g, "\n"
     @scanner = new StringScanner @source
     @mode    = "data"
     @buffer  = ""
