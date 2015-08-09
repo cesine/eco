@@ -77,7 +77,7 @@ task "dist", "Generate dist/eco.js", ->
        */
     """
 
-    source = uglify """
+    source = uglify.minify("""
       this.eco = (function(modules) {
         return function require(name) {
           var fn, module = {id: name, exports: {}};
@@ -91,7 +91,7 @@ task "dist", "Generate dist/eco.js", ->
       })({
         #{funcs.join ',\n'}
       })('eco');
-    """
+    """, fromString: true).code
 
     try
       fs.mkdirSync "#{__dirname}/dist", 0o755
