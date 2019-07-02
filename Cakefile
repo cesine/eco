@@ -35,7 +35,7 @@ task "fixtures", "Generate .coffee fixtures from .eco fixtures", ->
 task "dist", "Generate dist/eco.js", ->
   build -> bundle ->
     fs     = require("fs")
-    coffee = require("coffee-script").compile
+    coffee = require("coffeescript").compile
     uglify = require("uglify-js")
 
     read = (filename) ->
@@ -58,7 +58,7 @@ task "dist", "Generate dist/eco.js", ->
       "./scanner":        read "lib/scanner.js"
       "./util":           read "lib/util.js"
       "strscan":          read "node_modules/strscan/lib/strscan.js"
-      "coffee-script":    stub "CoffeeScript"
+      "coffeescript":     stub "CoffeeScript"
 
     cake_package = for name, source of modules
       """
