@@ -78,17 +78,7 @@ task "dist", "Generate dist/eco.js", ->
     """
 
     minify = (code) ->
-      toplevel = uglify.parse(code)
-      toplevel.figure_out_scope()
-
-      compressor = uglify.Compressor()
-      compressed_ast = toplevel.transform(compressor)
-    
-      compressed_ast.figure_out_scope()
-      compressed_ast.compute_char_frequency()
-      compressed_ast.mangle_names()
-
-      compressed_ast.print_to_string()
+      uglify.minify(code).code
 
     source = minify """
       this.eco = (function(modules) {
