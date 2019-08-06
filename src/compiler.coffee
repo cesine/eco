@@ -36,7 +36,25 @@ exports.precompile = precompile = (source) ->
       };
       if (!__escape) {
         __escape = __obj.escape = function(value) {
-            return _.escape(value);
+          var escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '`': '&#x60;'
+          };
+
+          var escaper = function(match) {
+            return escapeMap[match];
+          };
+
+          var source = '(?:' + Object.keys(escapeMap).join('|') + ')';
+          var testRegexp = RegExp(source);
+          var replaceRegexp = RegExp(source, 'g');
+
+          value = value == null ? '' : '' + value;
+          return testRegexp.test(value) ? value.replace(replaceRegexp, escaper) : value;
         }
       }
       (function() {
@@ -49,3 +67,4 @@ exports.precompile = precompile = (source) ->
 
 exports.compile = (source) ->
   do new Function "return #{precompile source}"
+  
