@@ -9,7 +9,8 @@
 , "main": "./lib/index.js"
 , "bin": "./bin/eco"
 , "scripts":
-  { "build": "echo TODO"
+  { "build": "coffee -co lib src"
+  , "fixtures": "echo TODO"
   , "test": "echo TODO"
   }
 , "repository":
