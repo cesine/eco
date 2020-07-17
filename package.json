@@ -8,6 +8,10 @@
   }]
 , "main": "./lib/index.js"
 , "bin": "./bin/eco"
+, "scripts":
+  { "build": "echo TODO"
+  , "test": "echo TODO"
+  }
 , "repository":
   { "type": "git"
   , "url": "http://github.com/sstephenson/eco.git"
