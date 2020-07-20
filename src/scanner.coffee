@@ -4,8 +4,8 @@
 module.exports = class Scanner
   @modePatterns:
     data:    /(.*?)(<%%|<%\s*(\#)|<%(([=-])?)|\n|$)/
-    code:    /(.*?)((((:|(->|=>))\s*))?%>|\n|$)/
-    comment: /(.*?)(%>|\n|$)/
+    code:    /([\s\S]*?)((((:|(->|=>))\s*))?%>|$)/
+    comment: /([\s\S]*?)(%>|$)/
 
   @dedentablePattern: /^(end|when|else|catch|finally)(?:\W|$)/
 
@@ -73,10 +73,7 @@ module.exports = class Scanner
         callback ["beginCode", print: @directive?, safe: @directive is "-"]
 
   scanCode: (callback) ->
-    if @tail is "\n"
-      callback ["fail", "unexpected newline in code block"]
-
-    else if @tail
+    if @tail
       @mode = "data"
       code  = trim @flush()
       code += " #{@arrow}" if @arrow
@@ -86,10 +83,7 @@ module.exports = class Scanner
       callback ["indent", @arrow] if @directive
 
   scanComment: (callback) ->
-    if @tail is "\n"
-      callback ["fail", "unexpected newline in code block"]
-
-    else if @tail
+    if @tail
       @mode   = "data"
       @buffer = ""
 

@@ -25,12 +25,16 @@ module.exports = class Preprocessor
 
   printString: (string) ->
     if string.length
+      string = string
+          .replace(/\s+</g, '<')
+          .replace(/>\s+/g, '>')
       @record "__out.push #{util.inspectString string}"
 
   beginCode: (options) ->
     @options = options
 
   recordCode: (code) ->
+    code = code.replace /\s+/g, ' '
     if code isnt "end"
       if @options.print
         if @options.safe

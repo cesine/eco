@@ -76,11 +76,11 @@ module.exports =
     test.same ["recordCode", "'<%%'"], tokens.shift()
     test.done()
 
-  "unexpected newline in code block": (test) ->
-    tokens = scan "foo\nhello <% do 'thing'\n %>"
+  "newlines in code blocks": (test) ->
+    tokens = scan "foo\nhello <% func {\nfoo: bar\n} %>"
     test.same ["printString", "foo\nhello "], tokens.shift()
     test.same ["beginCode", print: false, safe: false], tokens.shift()
-    test.same ["fail", "unexpected newline in code block"], tokens.shift()
+    test.same ["recordCode", "func {\nfoo: bar\n}"], tokens.shift()
     test.done()
 
   "unexpected end of template": (test) ->
