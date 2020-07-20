@@ -66,5 +66,4 @@ exports.precompile = precompile = (source) ->
   """
 
 exports.compile = (source) ->
-  do new Function "return #{precompile source}"
-  
+  precompile source
