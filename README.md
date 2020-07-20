@@ -1,3 +1,38 @@
+## This is a modified version of eco that depends on underscore.js for a safer `_.escape`
+
+**Why?** Because Eco's default `__escape` implementation doesn't escape single quotes, which makes XSS attacks like the following possible:
+
+```html
+<input type='text' value='<%= @value %>'>
+```
+
+with a @value of `x'onmouseover='alert(document.domain)`, an XSS occurs.
+
+### How to use this fork
+
+Use `dist/eco.js` instead of the unmaintained eco.js
+
+### How to use this fork with Rails and the eco gem
+
+Copy `dist/eco.js` into `vendor/assets/javascripts/eco-custom.js` and add the following to your application.rb file:
+
+```ruby
+class Application < Rails::Application
+  ...
+  # Eco, the Coffee Script templating language, hasn't been updated in 3 years.  We found an XSS bug in the escape
+  # function and fixed it by forking the library and using underscore.js's implementation.  In order to avoid also
+  # having to fork the eco Ruby gem, we're setting an explicit override path to our updated eco.js.
+  ENV['ECO_SOURCE_PATH'] = Rails.root.join("vendor/assets/javascripts/eco-custom.js").to_s
+end
+```
+
+Run `rm -rf tmp/cache/` to clear your local asset pipeline cache and restart your local Rails app.  Double check the fix
+by looking at application.js and searching for `__escape`.
+
+### How to recompile
+
+Compile with: `cake dist`
+
 Eco: Embedded CoffeeScript templates
 ====================================
 

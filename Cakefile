@@ -35,7 +35,7 @@ task "fixtures", "Generate .coffee fixtures from .eco fixtures", ->
 task "dist", "Generate dist/eco.js", ->
   build -> bundle ->
     fs     = require("fs")
-    coffee = require("coffee-script").compile
+    coffee = require("coffeescript").compile
     uglify = require("uglify-js")
 
     read = (filename) ->
@@ -58,9 +58,9 @@ task "dist", "Generate dist/eco.js", ->
       "./scanner":        read "lib/scanner.js"
       "./util":           read "lib/util.js"
       "strscan":          read "node_modules/strscan/lib/strscan.js"
-      "coffee-script":    stub "CoffeeScript"
+      "coffeescript":     stub "CoffeeScript"
 
-    package = for name, source of modules
+    cake_package = for name, source of modules
       """
         '#{name}': function(module, require, exports) {
           #{source}
@@ -77,7 +77,10 @@ task "dist", "Generate dist/eco.js", ->
        */
     """
 
-    source = uglify """
+    minify = (code) ->
+      uglify.minify(code).code
+
+    source = minify """
       this.eco = (function(modules) {
         return function require(name) {
           var fn, module = {id: name, exports: {}};
@@ -89,12 +92,12 @@ task "dist", "Generate dist/eco.js", ->
           }
         };
       })({
-        #{package.join ',\n'}
+        #{cake_package.join ',\n'}
       })('eco');
     """
 
     try
-      fs.mkdirSync "#{__dirname}/dist", 0755
+      fs.mkdirSync "#{__dirname}/dist", 755
     catch err
 
     fs.writeFileSync "#{__dirname}/dist/eco.js", "#{header}\n#{source}"

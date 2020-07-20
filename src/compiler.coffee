@@ -1,4 +1,4 @@
-CoffeeScript = require "coffee-script"
+CoffeeScript = require "coffeescript"
 {preprocess} = require "./preprocessor"
 {indent}     = require "./util"
 
@@ -36,12 +36,26 @@ exports.precompile = precompile = (source) ->
       };
       if (!__escape) {
         __escape = __obj.escape = function(value) {
-          return ('' + value)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/\x22/g, '&quot;');
-        };
+          var escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '`': '&#x60;'
+          };
+
+          var escaper = function(match) {
+            return escapeMap[match];
+          };
+
+          var source = '(?:' + Object.keys(escapeMap).join('|') + ')';
+          var testRegexp = RegExp(source);
+          var replaceRegexp = RegExp(source, 'g');
+
+          value = value == null ? '' : '' + value;
+          return testRegexp.test(value) ? value.replace(replaceRegexp, escaper) : value;
+        }
       }
       (function() {
     #{indent script, 4}
@@ -53,3 +67,4 @@ exports.precompile = precompile = (source) ->
 
 exports.compile = (source) ->
   do new Function "return #{precompile source}"
+  
