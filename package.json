@@ -1,30 +1,35 @@
-{ "name": "eco"
-, "description": "Embedded CoffeeScript templates"
-, "author": "Sam Stephenson"
-, "version": "1.1.0-rc-3"
-, "licenses": [
-  { "type": "MIT"
-  , "url": "https://github.com/sstephenson/eco/raw/master/LICENSE"
-  }]
-, "main": "./lib/index.js"
-, "bin": "./bin/eco"
-, "scripts":
-  { "build": "coffee -co lib src"
-  , "fixtures": "echo TODO"
-  , "test": "nodeunit"
+{
+  "name": "eco",
+  "description": "Embedded CoffeeScript templates",
+  "author": "Sam Stephenson",
+  "version": "1.1.0-rc-3",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sstephenson/eco/raw/master/LICENSE"
+    }
+  ],
+  "main": "./lib/index.js",
+  "bin": "./bin/eco",
+  "scripts": {
+    "build": "coffee -co lib src",
+    "fixtures": "echo TODO",
+    "test": "nodeunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sstephenson/eco.git"
+  },
+  "dependencies": {
+    "strscan": ">=1.0.1"
+  },
+  "devDependencies": {
+    "coffeescript": "1.12.7",
+    "express": "2.5.11",
+    "nodeunit": "0.11.3",
+    "uglify-js": "3.6.0"
+  },
+  "engine": {
+    "node": ">=0.6"
   }
-, "repository":
-  { "type": "git"
-  , "url": "http://github.com/sstephenson/eco.git"
-  }
-, "dependencies":
-  { "strscan": ">=1.0.1"
-  }
-, "devDependencies":
-  { "coffee-script": "1.12.7"
-  , "nodeunit": "0.11.3"
-  , "express": "2.5.11"
-  , "uglify-js": ">=1.0.0"
-  }
-, "engine": { "node": ">=0.6" }
 }

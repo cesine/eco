@@ -22,8 +22,8 @@ printUsage = ->
   process.exit 1
 
 printVersion = ->
-  packageJSON = JSON.parse fs.readFileSync __dirname + "/../package.json", "utf8"
-  console.error "Eco version #{packageJSON.version}"
+  pkg = JSON.parse fs.readFileSync __dirname + "/../package.json", "utf8"
+  console.error "Eco version #{pkg.version}"
   process.exit 0
 
 preprocessArgs = (args) ->
