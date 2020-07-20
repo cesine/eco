@@ -8,17 +8,22 @@
   }]
 , "main": "./lib/index.js"
 , "bin": "./bin/eco"
+, "scripts":
+  { "build": "coffee -co lib src"
+  , "fixtures": "echo TODO"
+  , "test": "nodeunit"
+  }
 , "repository":
   { "type": "git"
   , "url": "http://github.com/sstephenson/eco.git"
   }
 , "dependencies":
   { "strscan": ">=1.0.1"
-  , "coffee-script": ">=1.2.0"
   }
 , "devDependencies":
-  { "nodeunit": ">=0.6.4"
-  , "express": ">=2.0.0"
+  { "coffee-script": "1.12.7"
+  , "nodeunit": "0.11.3"
+  , "express": "2.5.11"
   , "uglify-js": ">=1.0.0"
   }
 , "engine": { "node": ">=0.6" }
