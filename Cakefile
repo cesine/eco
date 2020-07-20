@@ -60,7 +60,7 @@ task "dist", "Generate dist/eco.js", ->
       "strscan":          read "node_modules/strscan/lib/strscan.js"
       "coffee-script":    stub "CoffeeScript"
 
-    package = for name, source of modules
+    funcs = for name, source of modules
       """
         '#{name}': function(module, require, exports) {
           #{source}
@@ -77,7 +77,7 @@ task "dist", "Generate dist/eco.js", ->
        */
     """
 
-    source = uglify """
+    source = uglify.minify("""
       this.eco = (function(modules) {
         return function require(name) {
           var fn, module = {id: name, exports: {}};
@@ -89,12 +89,12 @@ task "dist", "Generate dist/eco.js", ->
           }
         };
       })({
-        #{package.join ',\n'}
+        #{funcs.join ',\n'}
       })('eco');
-    """
+    """, fromString: true).code
 
     try
-      fs.mkdirSync "#{__dirname}/dist", 0755
+      fs.mkdirSync "#{__dirname}/dist", 0o755
     catch err
 
     fs.writeFileSync "#{__dirname}/dist/eco.js", "#{header}\n#{source}"

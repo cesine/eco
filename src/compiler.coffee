@@ -17,9 +17,9 @@ exports.precompile = precompile = (source) ->
         return __safe(result);
       }, __sanitize = function(value) {
         if (value && value.ecoSafe) {
-          return value;
+          return value.toString();
         } else if (typeof value !== 'undefined' && value != null) {
-          return __escape(value);
+          return __escape(value.toString());
         } else {
           return '';
         }
