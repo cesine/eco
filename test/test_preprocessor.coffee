@@ -1,5 +1,5 @@
-{preprocess} = require "eco/preprocessor"
-{fixture}    = require "fixtures"
+{preprocess} = require "../lib/eco/preprocessor"
+{fixture}    = require "./lib/fixtures"
 
 module.exports =
   "preprocessing fixtures/hello.eco": (test) ->
