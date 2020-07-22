@@ -1,0 +1,13 @@
+<% for label in @columnLabels: %>
+    <select>
+        <option  value=''>
+            Please select a form field label.
+        </option>
+    </select>
+
+    <% if label: %>
+        <i class='column-alert' title='one'></i>
+    <% else: %>
+        <i class='column-alert' title='Values in this column will not'></i>
+    <% end %>
+<% end %>

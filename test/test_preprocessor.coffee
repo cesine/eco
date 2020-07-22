@@ -6,6 +6,10 @@ module.exports =
     test.same fixture("hello.coffee"), preprocess fixture("hello.eco")
     test.done()
 
+  "preprocessing fixtures/end_of_input.eco": (test) ->
+    test.same fixture("end_of_input.coffee"), preprocess fixture("end_of_input.eco")
+    test.done()
+
   "preprocessing fixtures/projects.eco": (test) ->
     test.same fixture("projects.coffee"), preprocess fixture("projects.eco")
     test.done()
