@@ -6,6 +6,10 @@ module.exports =
     test.ok eco.compile fixture("hello.eco")
     test.done()
 
+  "compiling fixtures/end_of_input.eco": (test) ->
+    test.ok eco.compile fixture("end_of_input.eco")
+    test.done()
+
   "compiling fixtures/projects.eco": (test) ->
     test.ok eco.compile fixture("projects.eco")
     test.done()
